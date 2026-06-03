@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: inventario
+    env: node
+    region: oregon
+    branch: main
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    # No incluyas credenciales aquí. Configura DATABASE_URL en el dashboard de Render.
