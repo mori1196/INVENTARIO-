@@ -13,6 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 // Servir archivos estáticos
 app.use(express.static(path.join(__dirname)));
 
+app.get('/healthz', (req, res) => res.json({ status: 'ok' }));
+
 // CONEXIÓN DB POSTGRESQL desde variables de entorno
 function requireEnv(name) {
     const value = process.env[name];
@@ -39,6 +41,15 @@ const dbConfig = process.env.DATABASE_URL
 
 const db = new Pool(dbConfig);
 
+process.on('unhandledRejection', (reason) => {
+    console.error('Unhandled Rejection:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+    process.exit(1);
+});
+
 const initialProducts = [
     ['Salmón Premium', 24.99, 50, 'Alimento premium para gatos con salmón fresco'],
     ['Snacks Pollo', 12.99, 75, 'Deliciosos snacks con sabor a pollo'],
@@ -47,10 +58,6 @@ const initialProducts = [
 
 async function initializeDatabase() {
     const setupQueries = [
-        `DROP TABLE IF EXISTS detalle_compras CASCADE;`,
-        `DROP TABLE IF EXISTS compras CASCADE;`,
-        `DROP TABLE IF EXISTS alimentos CASCADE;`,
-        `DROP TABLE IF EXISTS usuarios CASCADE;`,
         `CREATE TABLE IF NOT EXISTS usuarios (
             id SERIAL PRIMARY KEY,
             nombre VARCHAR(100) NOT NULL,
