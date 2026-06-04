@@ -82,7 +82,10 @@
 
 <!-- SCRIPT -->
 <script>
+// HARDCODED API URL - Do not change
 const API = 'https://inventario-e40f.onrender.com';
+console.log('✓ API URL configurada:', API);
+
 let adminToken = null;
 
 // ADMIN FUNCTIONS
@@ -175,6 +178,7 @@ function cargarVentas() {
     })
     .catch(err => console.error('Error cargarVentas:', err));
 }
+
 function normalizeName(nombre) {
     return nombre.toLowerCase()
         .normalize('NFD')
@@ -183,15 +187,24 @@ function normalizeName(nombre) {
 }
 
 function cargarProductos() {
+    console.log('🔄 Iniciando cargarProductos, API:', API);
+    
     const imagenes = {
         'salmon premium': 'https://thfvnext.bing.com/th/id/OIP.MlkMH9CWnSJuRMIquItQqwHaHa?o=7&cb=thfvnextfalconrm=3&rs=1&pid=ImgDetMain&o=7&rm=3',
         'snacks pollo': 'https://www.superpet.pe/on/demandware.static/-/Sites-SuperPet-master-catalog/default/dw21de95c7/images/sandwich-de-pollo-x80gr.jpg',
         'alimento light': 'https://th.bing.com/th/id/R.0f6c02e37ab9bf530bcbc7f786596030?rik=EFkcmac3zrMaRg&riu=http%3a%2f%2fpetcol.co%2fcdn%2fshop%2fproducts%2fPRODUCTO_7d7b5a6f-aeab-4a4d-8d89-a2'
     };
 
-    fetch(`${API}/alimentos`)
-    .then(res => res.json())
+    const url = `${API}/alimentos`;
+    console.log('📡 Haciendo fetch a:', url);
+    
+    fetch(url)
+    .then(res => {
+        console.log('✓ Respuesta recibida:', res.status);
+        return res.json();
+    })
     .then(productos => {
+        console.log('✓ Productos cargados:', productos);
         const grid = document.getElementById('productosGrid');
         if (!productos || productos.length === 0) {
             grid.innerHTML = '<p>No hay productos disponibles en este momento.</p>';
@@ -231,10 +244,11 @@ function cargarProductos() {
         });
     })
     .catch(err => {
-        console.error('Error cargarProductos:', err);
-        document.getElementById('productosGrid').innerHTML = '<p style="color:red;">Error al cargar productos.</p>';
+        console.error('❌ Error cargarProductos:', err);
+        document.getElementById('productosGrid').innerHTML = '<p style="color:red;">Error al cargar productos: ' + err.message + '</p>';
     });
 }
+
 function cargarInventario() {
     if (!adminToken) return;
     fetch(`${API}/admin/inventario`, {
@@ -336,11 +350,17 @@ function agregarCarrito(id, nombre, precio) {
 }
 
 function cargarCarrito() {
-    console.log('Cargando carrito...');
-    fetch(`${API}/carrito`)
-    .then(res => res.json())
+    console.log('🔄 Cargando carrito..., API:', API);
+    const url = `${API}/carrito`;
+    console.log('📡 Haciendo fetch a:', url);
+    
+    fetch(url)
+    .then(res => {
+        console.log('✓ Respuesta carrito:', res.status);
+        return res.json();
+    })
     .then(data => {
-        console.log('Datos carrito:', data);
+        console.log('✓ Datos carrito:', data);
         let html = "<h3>🛒 Carrito</h3>";
         let total = 0;
 
@@ -364,8 +384,8 @@ function cargarCarrito() {
         document.getElementById("carrito").innerHTML = html;
     })
     .catch(err => {
-        console.error('Error carrito:', err);
-        document.getElementById("carrito").innerHTML = '<p style="color:red;">Error al cargar carrito</p>';
+        console.error('❌ Error carrito:', err);
+        document.getElementById("carrito").innerHTML = '<p style="color:red;">Error al cargar carrito: ' + err.message + '</p>';
     });
 }
 
@@ -395,7 +415,8 @@ function finalizarCompra() {
 
 // Inicializar al cargar página
 window.addEventListener('load', function() {
-    console.log('Página cargada, inicializando carrito y productos');
+    console.log('✓ Página cargada, inicializando carrito y productos');
+    console.log('🌐 API URL:', API);
     cargarProductos();
     cargarCarrito();
 });
