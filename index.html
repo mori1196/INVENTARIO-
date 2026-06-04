@@ -82,9 +82,7 @@
 
 <!-- SCRIPT -->
 <script>
-const API = (window.location.origin && window.location.origin !== 'null')
-    ? window.location.origin
-    : 'https://inventario-e40f.onrender.com';
+const API = 'https://inventario-e40f.onrender.com';
 let adminToken = null;
 
 // ADMIN FUNCTIONS
@@ -188,7 +186,7 @@ function cargarProductos() {
     const imagenes = {
         'salmon premium': 'https://thfvnext.bing.com/th/id/OIP.MlkMH9CWnSJuRMIquItQqwHaHa?o=7&cb=thfvnextfalconrm=3&rs=1&pid=ImgDetMain&o=7&rm=3',
         'snacks pollo': 'https://www.superpet.pe/on/demandware.static/-/Sites-SuperPet-master-catalog/default/dw21de95c7/images/sandwich-de-pollo-x80gr.jpg',
-        'alimento light': 'https://th.bing.com/th/id/R.0f6c02e37ab9bf530bcbc7f786596030?rik=EFkcmac3zrMaRg&riu=http%3a%2f%2fpetcol.co%2fcdn%2fshop%2fproducts%2fPRODUCTO_7d7b5a6f-aeab-4a4d-8d89-a27e2ad4c744_1200x1200.png%3fv%3d1570406940&ehk=VpppSHUzbCqIJQePysCuVVvmLtPwpU9V0C4VvWvoKlw%3d&risl=&pid=ImgRaw&r=0',
+        'alimento light': 'https://th.bing.com/th/id/R.0f6c02e37ab9bf530bcbc7f786596030?rik=EFkcmac3zrMaRg&riu=http%3a%2f%2fpetcol.co%2fcdn%2fshop%2fproducts%2fPRODUCTO_7d7b5a6f-aeab-4a4d-8d89-a2'
     };
 
     fetch(`${API}/alimentos`)
@@ -220,7 +218,7 @@ function cargarProductos() {
                         <h3 style="margin: 0 0 0.5rem 0;">${producto.nombre}</h3>
                         <p style="font-size:1.2em;color:#667eea;font-weight:bold;margin:0.5rem 0;">Q${parseFloat(producto.precio).toFixed(2)}</p>
                     </div>
-                    <button data-id="${producto.id}" data-nombre="${producto.nombre}" data-precio="${parseFloat(producto.precio)}" style="background:#667eea;color:white;border:none;padding:0.7rem 1.5rem;border-radius:5px;cursor:pointer;width:100%;font-weight:bold;margin-top:auto;">Agregar al carrito</button>
+                    <button data-id="${producto.id}" data-nombre="${producto.nombre}" data-precio="${parseFloat(producto.precio)}" style="background:#667eea;color:white;border:none;padding:0.7rem;border-radius:4px;cursor:pointer;">Agregar al Carrito</button>
                 </div>
             </div>`;
         });
