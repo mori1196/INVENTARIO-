@@ -82,7 +82,9 @@
 
 <!-- SCRIPT -->
 <script>
-const API = window.location.origin !== 'null' ? window.location.origin : 'https://inventario-e40f.onrender.com';
+const API = (window.location.origin && window.location.origin !== 'null')
+    ? window.location.origin
+    : 'https://inventario-e40f.onrender.com';
 let adminToken = null;
 
 // ADMIN FUNCTIONS
