@@ -83,8 +83,11 @@
 <!-- SCRIPT -->
 <script>
 // HARDCODED API URL - Do not change
-const API = 'https://inventario-e40f.onrender.com';
-console.log('✓ API URL configurada:', API);
+const API = (window.location.origin && window.location.origin !== 'null')
+    ? window.location.origin
+    : 'https://inventario-e40f.onrender.com';
+
+const PUBLIC_API = API.includes('localhost') ? 'https://inventario-e40f.onrender.com' : API;
 
 let adminToken = null;
 
